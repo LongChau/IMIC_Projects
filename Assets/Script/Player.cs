@@ -23,7 +23,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (!GameManager._instance.startGame) return;
+        //Move();
+        MoveByTransform();
     }
 
     private void Move()
@@ -32,6 +34,20 @@ public class Player : MonoBehaviour
         
         rb.velocity = new Vector2(x, 0); // cho player di chuyển 
 
+        BoundPlayerPosition(transform.position); // check vị trí của player có ra khỏi màn hình hay ko
+    }
+
+    private void MoveByTransform()
+    {
+        var speed = 10f;
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
+        }
         BoundPlayerPosition(transform.position); // check vị trí của player có ra khỏi màn hình hay ko
     }
 
